@@ -1,4 +1,4 @@
-﻿// robot-droga.cpp : Ten plik zawiera funkcję „main”. W nim rozpoczyna się i kończy wykonywanie programu.
+// robot-droga.cpp : Ten plik zawiera funkcję „main”. W nim rozpoczyna się i kończy wykonywanie programu.
 //
 
 #include "stdafx.h"
@@ -9,6 +9,7 @@ int main()
 {
     cout << "Hello World!\n";
     cout << "Witaj janusz!\n";
+    cout << "Witaj!\n";
     return 0;
 }
 
