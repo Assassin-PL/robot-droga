@@ -10,6 +10,7 @@ int main()
     cout << "Hello World!\n";
     cout << "Witaj janusz!\n";
     cout << "Witaj!1213\n";
+    cout << "Pisze cos"<<endl;
     return 0;
 }
 
