@@ -5,6 +5,57 @@
 
 using namespace std;
 
+class List {
+    struct Node {
+        int x = 0;
+        int y = 0;
+        bool is_visited = false;
+        Node* next;
+    };
+
+    Node* head;
+
+public:
+    List() {
+        head = NULL;
+    }
+
+    ~List() {
+        while (head != NULL) {
+            Node* n = head->next;
+            delete head;
+            head = n;
+        }
+    }
+
+    void add(int value, int value_sec) {
+        Node* n = new Node;
+        n->x = value;
+        n->y = value_sec;
+        n->next = head;
+        head = n;
+    }
+
+    void get_number(int number) {
+        cout << " x = " << test(number)->x << " y = " << test(number)->y << endl;
+        cout << " Is visited??? : " << test(number)->is_visited << endl;
+    }
+
+    Node* test(int ile_razy)
+    {
+        Node* n = head;
+        for (int i = 0; i < ile_razy; i++)
+        {
+            n = n->next;
+        }
+        return n;
+    }
+
+    void make_visited(int number) {
+        test(number)->is_visited = true;
+    }
+};
+
 #define segSize 5
 #define segIl 6
 const int MAX_ROWS = 8;
