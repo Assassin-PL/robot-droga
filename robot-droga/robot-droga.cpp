@@ -56,7 +56,7 @@ public:
     }
 
     int get_x(int number) { //funkcja zwracajoca kordy po x
-        return test(number)->x; 
+        return test(number)->x;
     }
 
     int get_y(int number) { //funkcja zwracajoca kordy po y
@@ -158,11 +158,11 @@ void poka_plansze(int wyloswane_segmenty[MAX_ROWS][MAX_COLUMS])
         cout << endl;
         for (int j = 0; j < MAX_COLUMS; j++)
         {
-            cout << wyloswane_segmenty[i][j] <<" ";
+            cout << wyloswane_segmenty[i][j] << " ";
         }
     }
 }
-void inicjalizuj_plansze(int plansza[8 * segSize][4 * segSize],int wylosowane_segmenty[MAX_ROWS][MAX_COLUMS], bool segmenty[segIl][segSize][segSize])
+void inicjalizuj_plansze(int plansza[8 * segSize][4 * segSize], int wylosowane_segmenty[MAX_ROWS][MAX_COLUMS], bool segmenty[segIl][segSize][segSize])
 {
     int numer_segmentu = 0;
     for (int i = 0; i < MAX_ROWS; i++)
@@ -200,7 +200,7 @@ void prezentuj_plansze(int plansza[8 * segSize][4 * segSize])
             {
                 cout << "X";
             }
-            else if(plansza[i][j] == 0)
+            else if (plansza[i][j] == 0)
             {
                 cout << " ";
             }
@@ -221,7 +221,7 @@ void losuj_punkt(int punkt[], int plansza[8 * segSize][4 * segSize])
     int x, y;
     x = algorytm_losujacy(0, PLANSZA_HEIGHT);
     y = algorytm_losujacy(0, PLANSZA_WIDTH);
-    while(!is_point_inside_board(x,y,plansza))
+    while (!is_point_inside_board(x, y, plansza))
     {
         x = algorytm_losujacy(0, PLANSZA_HEIGHT);
         y = algorytm_losujacy(0, PLANSZA_WIDTH);
@@ -247,7 +247,7 @@ void zacznij_ruch(int plansza[8 * segSize][4 * segSize], int start_point[2], int
     list.make_visited(0); // no na poczotku informujemy program ze ten wierzcholek zostal odwieddzony
     how++;
     tworz_sasiedztwa(list, plansza, how, how);
-    cout<< endl << how << endl;
+    cout << endl << how << endl;
     for (int i = 0; i <= how; i++)
     {
         cout << "  koordynat x wynosi: " << list.get_x(i) << "  koordynat y wynosi: " << list.get_y(i) << "  czy jest odwiedzone? : " << list.get_visited(i) << endl;
@@ -293,7 +293,7 @@ void zacznij_ruch(int plansza[8 * segSize][4 * segSize], int start_point[2], int
 
 void tworz_sasiedztwa(List& list, int plansza[8 * segSize][4 * segSize], int number, int& how)// tworzymy liste sasiedztwa, czyli liste miejsc na ktorych robot moze sie poruszac
 {
-    if (plansza[list.get_x(number)][list.get_y(number) + 1] == 0 && (list.get_y(number) + 1)>0 && (list.get_y(number) + 1) < (4 * segSize)) // !trzeba bedzie zrobic ifa informujacego o tym czy koordynat nie wyzedl poza rozmiar tablicy bo jak tak to bedzie blad + trzeba bedzie dodac warunek sprawdzajacy czy ten pole nie jest odwiedzone(czy is_visited przyjmuje true)
+    if (plansza[list.get_x(number)][list.get_y(number) + 1] == 0 && (list.get_y(number) + 1) > 0 && (list.get_y(number) + 1) < (4 * segSize)) // !trzeba bedzie zrobic ifa informujacego o tym czy koordynat nie wyzedl poza rozmiar tablicy bo jak tak to bedzie blad + trzeba bedzie dodac warunek sprawdzajacy czy ten pole nie jest odwiedzone(czy is_visited przyjmuje true)
     {
         list.add(list.get_x(number), list.get_y(number) + 1);
         how++;
