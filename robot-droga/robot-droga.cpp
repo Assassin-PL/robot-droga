@@ -1,7 +1,11 @@
 // robot-droga.cpp : Ten plik zawiera funkcję „main”. W nim rozpoczyna się i kończy wykonywanie programu.
 //
 
-#include "stdafx.h"
+#include <iostream>
+#include <cstdlib>
+#include <time.h>
+#include <iomanip>
+#include <random>
 
 using namespace std;
 
@@ -316,6 +320,7 @@ void wiedz_do_wezla(List& list, int plansza[MAX_ROWS * SEG_SIZE][MAX_COLUMS * SE
         x = list.get_x(number);
         y = list.get_y(number);
         plansza[x][y] = 4;
+        cout << "x: " << x << " y: " << y << endl;
         list.make_visited(number);
         tworz_sasiedztwa(list, plansza, number, how);
     }
