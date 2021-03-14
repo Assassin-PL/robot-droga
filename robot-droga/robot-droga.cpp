@@ -240,6 +240,7 @@ bool is_point_inside_board(int point_x, int point_y, int plansza[PLANSZA_HEIGHT]
 
 void zacznij_ruch(int plansza[8 * segSize][4 * segSize], int start_point[2], int end_point[2])
 {
+    plansza[end_point[0]][end_point[1]] = 0;
     List list; //inicjalizacja listy
     int how = -1; // zmienna informujaca nas o wielkosci listy, jest zawsze inkrementowana jak sie zrobi list.add
     list.add(start_point[0], start_point[1]); // dodanie 1 punktu czyli naszego wylosowanego a jako koordynatow do listy
@@ -257,6 +258,33 @@ void zacznij_ruch(int plansza[8 * segSize][4 * segSize], int start_point[2], int
     {
         cout << "  koordynat x wynosi: " << list.get_x(i) << "  koordynat y wynosi: " << list.get_y(i) << "  czy jest odwiedzone? : " << list.get_visited(i) << endl;
     }
+    while (1)
+    {
+        wiedz_do_wezla(list, plansza, 0, how);
+        if (list.get_x(0) == end_point[0] && list.get_y(0) == end_point[0])
+        {
+            cout << "znaleziono B!!!!!";
+            break;
+        }
+        if (list.get_x(1) == end_point[0] && list.get_y(1) == end_point[0])
+        {
+            cout << "znaleziono B!!!!!";
+            break;
+        }if (list.get_x(2) == end_point[0] && list.get_y(2) == end_point[0])
+        {
+            cout << "znaleziono B!!!!!";
+            break;
+        }if (list.get_x(3) == end_point[0] && list.get_y(3) == end_point[0])
+        {
+            cout << "znaleziono B!!!!!";
+            break;
+        }if (list.get_x(4) == end_point[0] && list.get_y(4) == end_point[0])
+        {
+            cout << "znaleziono B!!!!!";
+            break;
+        }
+    }
+    plansza[end_point[0]][end_point[1]] = 3;
     //while (plansza[list.get_x(how)][list.get_y(how)] != 3)//trzeba mu ogarnac zeby sie nie zapetla to znaczy co bedzie jak dojdzie do koziego rogu trzeba bedzie mu napisac funkcje zeby sie wycofal
     //{
     //    wiedz_do_wezla(list, plansza, how, how);
