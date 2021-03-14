@@ -7,9 +7,9 @@ using namespace std;
 
 class List {
     struct Node {
-        int x = 0;
+        int x = 0; //koordynaty naszego punktu z planszy
         int y = 0;
-        bool is_visited = false;
+        bool is_visited = false; // wartosc kazdego wierzcholku mowiaca o tym czy nie zostal odwiedzony
         Node* next;
     };
 
@@ -28,7 +28,7 @@ public:
         }
     }
 
-    void add(int value, int value_sec) {
+    void add(int value, int value_sec) { //dodawanie wierzcholka
         Node* n = new Node;
         n->x = value;
         n->y = value_sec;
@@ -36,12 +36,12 @@ public:
         head = n;
     }
 
-    void get_number(int number) {
+    void get_number(int number) { //debugowa funkcja
         cout << " x = " << test(number)->x << " y = " << test(number)->y << endl;
         cout << " Is visited??? : " << test(number)->is_visited << endl;
     }
 
-    Node* test(int ile_razy)
+    Node* test(int ile_razy) //!!wazna funkcja, pozwala nam na dostep do wskaznika do ostatniej komorki listy ()
     {
         Node* n = head;
         for (int i = 0; i < ile_razy; i++)
@@ -51,8 +51,16 @@ public:
         return n;
     }
 
-    void make_visited(int number) {
+    void make_visited(int number) { //funkcaj zmieniajaca wezel na odwiedzony
         test(number)->is_visited = true;
+    }
+
+    int get_x(int number) { //funkcja zwracajoca kordy po x
+        return test(number)->x; 
+    }
+
+    int get_y(int number) { //funkcja zwracajoca kordy po y
+        return test(number)->y;
     }
 };
 
@@ -71,6 +79,9 @@ void rob_mikrotablice(int plansza[8 * segSize][4 * segSize], int numer_segmentu,
 void prezentuj_plansze(int plansza[8 * segSize][4 * segSize]);
 void losuj_punkt(int punkt[], int plansza[8 * segSize][4 * segSize]);
 bool is_point_inside_board(int point_x, int point_y, int plansza[PLANSZA_HEIGHT][PLANSZA_WIDTH]);
+void zacznij_ruch(int plansza[8 * segSize][4 * segSize], int start_point[2], int end_point[2]);
+void wiedz_do_wezla(List& list, int plansza[8 * segSize][4 * segSize], int number, int& how);
+void tworz_sasiedztwa(List& list, int plansza[8 * segSize][4 * segSize], int number, int& how);
 
 int main()
 {
@@ -109,6 +120,7 @@ int main()
     plansza[start_point[0]][start_point[1]] = 2;
     plansza[end_point[0]][end_point[1]] = 3;
     prezentuj_plansze(plansza);
+    cout << endl;
     return 0;
 }
 
@@ -220,3 +232,50 @@ bool is_point_inside_board(int point_x, int point_y, int plansza[PLANSZA_HEIGHT]
     else
         return true;
 }
+
+void zacznij_ruch(int plansza[8 * segSize][4 * segSize], int start_point[2], int end_point[2])
+{
+    List list; //inicjalizacja listy
+    int how = 0; // zmienna informujaca nas o wielkosci listy, jest zawsze inkrementowana jak sie zrobi list.add
+    list.add(start_point[0], start_point[1]); // dodanie 1 punktu czyli naszego wylosowanego a jako koordynatow do listy
+    list.make_visited(how); // no na poczotku informujemy program ze ten wierzcholek zostal odwieddzony
+    how++;
+    tworz_sasiedztwa(list, plansza, how - 1, how);
+    while (plansza[list.get_x(how)][list.get_y(how)] != 3)//trzeba mu ogarnac zeby sie nie zapetla to znaczy co bedzie jak dojdzie do koziego rogu trzeba bedzie mu napisac funkcje zeby sie wycofal
+    {
+        wiedz_do_wezla(list, plansza, how, how);
+    }
+}
+
+void tworz_sasiedztwa(List& list, int plansza[8 * segSize][4 * segSize], int number, int& how)// tworzymy liste sasiedztwa, czyli liste miejsc na ktorych robot moze sie poruszac
+{
+    if (plansza[list.get_x(number)][list.get_y(number) + 1] != 0) // !trzeba bedzie zrobic ifa informujacego o tym czy koordynat nie wyzedl poza rozmiar tablicy bo jak tak to bedzie blad + trzeba bedzie dodac warunek sprawdzajacy czy ten pole nie jest odwiedzone(czy is_visited przyjmuje true)
+    {
+        list.add(list.get_x(number), list.get_y(number) + 1);
+        how++;
+    }
+    if (plansza[list.get_x(number)][list.get_y(number) - 1] != 0)
+    {
+        list.add(list.get_x(number), list.get_y(number) - 1);
+        how++;
+    }
+    if (plansza[list.get_x(number) + 1][list.get_y(number)] != 0)
+    {
+        list.add(list.get_x(number) + 1, list.get_y(number));
+        how++;
+    }
+    if (plansza[list.get_x(number) - 1][list.get_y(number)] != 0)
+    {
+        list.add(list.get_x(number) + 1, list.get_y(number));
+        how++;
+    }
+}
+
+void wiedz_do_wezla(List& list, int plansza[8 * segSize][4 * segSize], int number, int& how)
+{
+    list.add(list.get_x(number), list.get_y(number)); // pojscie do ostatniego obiektu z listy i dodanie go bo my zawsze przesylamy how
+    list.make_visited(how); // no na poczotku informujemy program ze ten wierzcholek zostal odwieddzony
+    how++;
+    tworz_sasiedztwa(list, plansza, how - 1, how);
+}
+
