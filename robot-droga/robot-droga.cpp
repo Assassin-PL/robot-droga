@@ -48,7 +48,10 @@ public:
         {
             n = n->next;
         }
-        return n;
+        if (n != NULL)
+        {
+            return n;
+        }
     }
 
     void make_visited(int number) { //funkcaj zmieniajaca wezel na odwiedzony
@@ -291,10 +294,10 @@ void zacznij_ruch(int plansza[8 * segSize][4 * segSize], int start_point[2], int
             break;
         }
     }
-    for (int i = 0; i <= 50; i++)
+    /*for (int i = 0; i <= 50; i++)
     {
         cout << "  koordynat x wynosi: " << list.get_x(i) << "  koordynat y wynosi: " << list.get_y(i) << "  czy jest odwiedzone? : " << list.get_visited(i) << endl;
-    }
+    }*/
     plansza[end_point[0]][end_point[1]] = 3;
 }
 
@@ -343,4 +346,3 @@ void wiedz_do_wezla(List& list, int plansza[8 * segSize][4 * segSize], int numbe
         wiedz_do_wezla(list, plansza, number, how);
     }
 }
-
