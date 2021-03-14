@@ -136,8 +136,8 @@ int main()
 
 int algorytm_losujacy(int beg, int end)
 {
-    random_device rd; 
-    mt19937 gen(rd()); 
+    random_device rd;
+    mt19937 gen(rd());
     uniform_int_distribution<> distr(beg, end);
 
     return distr(gen);
@@ -267,7 +267,7 @@ void zacznij_ruch(int plansza[MAX_ROWS * SEG_SIZE][MAX_COLUMS * SEG_SIZE], int s
     //{
     //    cout << "  koordynat x wynosi: " << list.get_x(i) << "  koordynat y wynosi: " << list.get_y(i) << "  czy jest odwiedzone? : " << list.get_visited(i) << endl;
     //}
-    while(1)
+    while (1)
     {
         wiedz_do_wezla(list, plansza, 0, how);
         if (list.get_x(0) == end_point[0] && list.get_y(0) == end_point[1])
@@ -277,7 +277,7 @@ void zacznij_ruch(int plansza[MAX_ROWS * SEG_SIZE][MAX_COLUMS * SEG_SIZE], int s
         }
         if (list.get_x(1) == end_point[1] && list.get_y(0) == end_point[1])
         {
-            cout <<endl << "Znaleziono B!!"<<endl;
+            cout << endl << "Znaleziono B!!" << endl;
             break;
         }
         if (list.get_x(2) == end_point[2] && list.get_y(0) == end_point[1])
@@ -340,6 +340,10 @@ void wiedz_do_wezla(List& list, int plansza[MAX_ROWS * SEG_SIZE][MAX_COLUMS * SE
     else
     {
         number++;
+        if (number >= how)
+        {
+            number = 1;
+        }
         wiedz_do_wezla(list, plansza, number, how);
     }
 }
