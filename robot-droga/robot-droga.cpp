@@ -1,7 +1,11 @@
 // robot-droga.cpp : Ten plik zawiera funkcję „main”. W nim rozpoczyna się i kończy wykonywanie programu.
 //
 
-#include "stdafx.h"
+#include <iostream>
+#include <cstdlib>
+#include <time.h>
+#include <iomanip>
+#include <random>
 
 using namespace std;
 
