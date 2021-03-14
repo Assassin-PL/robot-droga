@@ -256,22 +256,12 @@ void zacznij_ruch(int plansza[MAX_ROWS * SEG_SIZE][MAX_COLUMS * SEG_SIZE], int s
     while (1)
     {
         wiedz_do_wezla(list, plansza, 0, how);
-        if (list.get_x(0) == end_point[0] && list.get_y(0) == end_point[1])
+        if ((list.get_x(0) == end_point[0]) && (list.get_y(0) == end_point[1]))
         {
             cout << endl << "Znaleziono B!!" << endl;
             break;
         }
-        if (list.get_x(1) == end_point[1] && list.get_y(0) == end_point[1])
-        {
-            cout << endl << "Znaleziono B!!" << endl;
-            break;
-        }
-        if (list.get_x(2) == end_point[2] && list.get_y(0) == end_point[1])
-        {
-            cout << endl << "Znaleziono B!!" << endl;
-            break;
-        }
-        if (list.get_x(3) == end_point[3] && list.get_y(0) == end_point[1])
+        if ((list.get_x(1) == end_point[0]) && (list.get_y(1) == end_point[1]))
         {
             cout << endl << "Znaleziono B!!" << endl;
             break;
@@ -282,25 +272,25 @@ void zacznij_ruch(int plansza[MAX_ROWS * SEG_SIZE][MAX_COLUMS * SEG_SIZE], int s
 
 void tworz_sasiedztwa(List& list, int plansza[MAX_ROWS * SEG_SIZE][MAX_COLUMS * SEG_SIZE], int number, int& how)// tworzymy liste sasiedztwa, czyli liste miejsc na ktorych robot moze sie poruszac
 {
-    if (plansza[list.get_x(number)][list.get_y(number) + 1] == 0 && (list.get_y(number) + 1) >= 0 && (list.get_y(number) + 1) < (MAX_COLUMS * SEG_SIZE))
+    if (plansza[list.get_x(number)][list.get_y(number) + 1] == 0 && (list.get_y(number) + 1) >= 1 && (list.get_y(number) + 1) <1 + (MAX_COLUMS * SEG_SIZE))
     {
         list.add(list.get_x(number), list.get_y(number) + 1);
         how++;
         number++;
     }
-    if (plansza[list.get_x(number)][list.get_y(number) - 1] == 0 && (list.get_y(number) - 1) >= 0 && (list.get_y(number) - 1) < (MAX_COLUMS * SEG_SIZE))
+    if (plansza[list.get_x(number)][list.get_y(number) - 1] == 0 && (list.get_y(number) - 1) >= 0 && (list.get_y(number) - 1) < (MAX_COLUMS * SEG_SIZE)- 1)
     {
         list.add(list.get_x(number), list.get_y(number) - 1);
         how++;
         number++;
     }
-    if (plansza[list.get_x(number) + 1][list.get_y(number)] == 0 && (list.get_x(number) + 1) >= 0 && (list.get_x(number) + 1) < (MAX_ROWS * SEG_SIZE))
+    if (plansza[list.get_x(number) + 1][list.get_y(number)] == 0 && (list.get_x(number) + 1) >= -1 && (list.get_x(number) + 1) < (MAX_ROWS * SEG_SIZE))
     {
         list.add(list.get_x(number) + 1, list.get_y(number));
         how++;
         number++;
     }
-    if (plansza[list.get_x(number) - 1][list.get_y(number)] == 0 && (list.get_x(number) - 1) >= 0 && (list.get_x(number) - 1) < (MAX_ROWS * SEG_SIZE))
+    if (plansza[list.get_x(number) - 1][list.get_y(number)] == 0 && (list.get_x(number) - 1) >= 1 && (list.get_x(number) - 1) < (MAX_ROWS * SEG_SIZE)- 1)
     {
         list.add(list.get_x(number) - 1, list.get_y(number));
         how++;
@@ -316,6 +306,7 @@ void wiedz_do_wezla(List& list, int plansza[MAX_ROWS * SEG_SIZE][MAX_COLUMS * SE
         x = list.get_x(number);
         y = list.get_y(number);
         plansza[x][y] = 4;
+        cout << "x: " << x << " y: " << y << endl;
         list.make_visited(number);
         tworz_sasiedztwa(list, plansza, number, how);
     }
