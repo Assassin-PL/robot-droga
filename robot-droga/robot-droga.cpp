@@ -5,6 +5,14 @@
 
 using namespace std;
 
+#define SEG_SIZE 5
+#define SEG_IL 6
+#define MAX_ROWS 8
+#define MAX_COLUMS 4
+const int PLANSZA_WIDTH = MAX_COLUMS * SEG_SIZE;
+const int PLANSZA_HEIGHT = MAX_ROWS * SEG_SIZE;
+
+
 class List {
     struct Node {
         int x = 0; //koordynaty naszego punktu z planszy
@@ -68,45 +76,34 @@ public:
     }
 };
 
-#define segSize 5
-#define segIl 6
-const int MAX_ROWS = 8;
-const int MAX_COLUMS = 4;
-const int PLANSZA_WIDTH = MAX_COLUMS * segSize;
-const int PLANSZA_HEIGHT = MAX_ROWS * segSize;
 
 int algorytm_losujacy(int beg, int end);
 void losuj_plansze(int wyloswane_segmenty[MAX_ROWS][MAX_COLUMS]);
 void poka_plansze(int wyloswane_segmenty[MAX_ROWS][MAX_COLUMS]);
-void inicjalizuj_plansze(int plansza[MAX_ROWS * segSize][MAX_COLUMS * segSize], int wylosowane_segmenty[MAX_ROWS][MAX_COLUMS], bool segmenty[segIl][segSize][segSize]);
-void rob_mikrotablice(int plansza[MAX_ROWS * segSize][MAX_COLUMS * segSize], int numer_segmentu, bool segmenty[segIl][segSize][segSize], int numer_wiersza, int numer_kolumny);
-void prezentuj_plansze(int plansza[MAX_ROWS * segSize][MAX_COLUMS * segSize]);
-void losuj_punkt(int punkt[], int plansza[MAX_ROWS * segSize][MAX_COLUMS * segSize]);
+void inicjalizuj_plansze(int plansza[MAX_ROWS * SEG_SIZE][MAX_COLUMS * SEG_SIZE], int wylosowane_segmenty[MAX_ROWS][MAX_COLUMS], bool segmenty[SEG_IL][SEG_SIZE][SEG_SIZE]);
+void rob_mikrotablice(int plansza[MAX_ROWS * SEG_SIZE][MAX_COLUMS * SEG_SIZE], int numer_segmentu, bool segmenty[SEG_IL][SEG_SIZE][SEG_SIZE], int numer_wiersza, int numer_kolumny);
+void prezentuj_plansze(int plansza[MAX_ROWS * SEG_SIZE][MAX_COLUMS * SEG_SIZE]);
+void losuj_punkt(int punkt[], int plansza[MAX_ROWS * SEG_SIZE][MAX_COLUMS * SEG_SIZE]);
 bool is_point_inside_board(int point_x, int point_y, int plansza[PLANSZA_HEIGHT][PLANSZA_WIDTH]);
-void zacznij_ruch(int plansza[MAX_ROWS * segSize][MAX_COLUMS * segSize], int start_point[2], int end_point[2]);
-void wiedz_do_wezla(List& list, int plansza[MAX_ROWS * segSize][MAX_COLUMS * segSize], int number, int& how);
-void tworz_sasiedztwa(List& list, int plansza[MAX_ROWS * segSize][MAX_COLUMS * segSize], int number, int& how);
-void tworz_sasiedztwa_2(List& list, int plansza[MAX_ROWS * segSize][MAX_COLUMS * segSize], int number, int& how);
-void tworz_sasiedztwa_3(List& list, int plansza[MAX_ROWS * segSize][MAX_COLUMS * segSize], int number, int& how);
-void tworz_sasiedztwa_4(List& list, int plansza[MAX_ROWS * segSize][MAX_COLUMS * segSize], int number, int& how);
+void zacznij_ruch(int plansza[MAX_ROWS * SEG_SIZE][MAX_COLUMS * SEG_SIZE], int start_point[2], int end_point[2]);
+void wiedz_do_wezla(List& list, int plansza[MAX_ROWS * SEG_SIZE][MAX_COLUMS * SEG_SIZE], int number, int& how);
+void tworz_sasiedztwa(List& list, int plansza[MAX_ROWS * SEG_SIZE][MAX_COLUMS * SEG_SIZE], int number, int& how);
+void tworz_sasiedztwa_2(List& list, int plansza[MAX_ROWS * SEG_SIZE][MAX_COLUMS * SEG_SIZE], int number, int& how);
+void tworz_sasiedztwa_3(List& list, int plansza[MAX_ROWS * SEG_SIZE][MAX_COLUMS * SEG_SIZE], int number, int& how);
+void tworz_sasiedztwa_4(List& list, int plansza[MAX_ROWS * SEG_SIZE][MAX_COLUMS * SEG_SIZE], int number, int& how);
 
 
 int main()
 {
     int start_point[2];
     int end_point[2];
-    bool rzad1[segIl][segSize] = { {1,1,0,1,1},{1,1,0,0,1},{0,0,0,0,0},{1,1,0,0,0},{0,0,0,1,1},{1,1,0,1,1} };
-    bool rzad2[segIl][segSize] = { {1,0,0,1,1},{0,1,1,0,1},{0,0,1,0,0},{1,0,0,1,0},{1,0,0,0,1},{1,1,0,1,1} }; // na czarno 1, na biało 0, jak dla mnie bardziej intuicyjne
-    bool rzad3[segIl][segSize] = { {0,0,1,0,0},{0,0,0,0,0},{0,0,1,1,0},{0,0,1,0,0},{0,0,1,0,0},{0,0,0,0,0} };
-    bool rzad4[segIl][segSize] = { {1,0,0,0,1},{1,0,0,0,1},{1,0,1,1,1},{0,1,0,0,1},{0,0,1,0,0},{1,1,0,1,1} };
-    bool rzad5[segIl][segSize] = { {1,1,0,1,1},{1,1,0,0,1},{1,0,0,0,0},{1,0,0,1,1},{0,0,0,0,1},{1,1,0,1,1} };
-    int plansza[MAX_ROWS * segSize][4 * segSize];
-    bool segmenty[segIl][segSize][segSize] = {
+    int plansza[MAX_ROWS * SEG_SIZE][MAX_COLUMS * SEG_SIZE];
+    bool segmenty[SEG_IL][SEG_SIZE][SEG_SIZE] = {
         { {1,1,0,1,1}, {1,0,0,1,1}, {0,0,1,0,0}, {1,0,0,0,1}, {1,1,0,1,1}
         },
         { {1,1,0,0,1}, {0,1,1,0,1}, {0,0,0,0,0}, {1,0,0,0,1}, {1,1,0,0,1}
         },
-        { {0,0,0,0,0}, {0,0,1,0,0}, {0,0,1,1,0}, {1,0,1,1,1}, {1,0,0,0,0}
+        { {0,0,0,0,0}, {0,0,1,0,0}, {0,0,1,1,0}, {1,0,1,1,1}, {1,0,0,0,0}   // na czarno 1, na biało 0.
         },
         { {1,1,0,0,0}, {1,0,0,1,0}, {0,0,1,0,0}, {0,1,0,0,1}, {1,0,0,1,1}
         },
@@ -121,7 +118,7 @@ int main()
     poka_plansze(wyloswane_segmenty);
     cout << endl;
     inicjalizuj_plansze(plansza, wyloswane_segmenty, segmenty);
-    prezentuj_plansze(plansza);
+    //prezentuj_plansze(plansza);
     losuj_punkt(start_point, plansza);
     losuj_punkt(end_point, plansza);
     cout << " \n A :" << start_point[0] << " , " << start_point[1] << "\n B :  " << end_point[0] << " , " << end_point[1] << endl;
@@ -136,9 +133,9 @@ int main()
 
 int algorytm_losujacy(int beg, int end)
 {
-    random_device rd; // obtain a random number from hardware
-    mt19937 gen(rd()); // seed the generator
-    uniform_int_distribution<> distr(beg, end); // define the range
+    random_device rd; 
+    mt19937 gen(rd()); 
+    uniform_int_distribution<> distr(beg, end);
 
     return distr(gen);
 }
@@ -167,7 +164,7 @@ void poka_plansze(int wyloswane_segmenty[MAX_ROWS][MAX_COLUMS])
         }
     }
 }
-void inicjalizuj_plansze(int plansza[MAX_ROWS * segSize][MAX_COLUMS * segSize], int wylosowane_segmenty[MAX_ROWS][MAX_COLUMS], bool segmenty[segIl][segSize][segSize])
+void inicjalizuj_plansze(int plansza[MAX_ROWS * SEG_SIZE][MAX_COLUMS * SEG_SIZE], int wylosowane_segmenty[MAX_ROWS][MAX_COLUMS], bool segmenty[SEG_IL][SEG_SIZE][SEG_SIZE])
 {
     int numer_segmentu = 0;
     for (int i = 0; i < MAX_ROWS; i++)
@@ -179,27 +176,27 @@ void inicjalizuj_plansze(int plansza[MAX_ROWS * segSize][MAX_COLUMS * segSize], 
         }
     }
 }
-void rob_mikrotablice(int plansza[MAX_ROWS * segSize][MAX_COLUMS * segSize], int numer_segmentu, bool segmenty[segIl][segSize][segSize], int numer_wiersza, int numer_kolumny)
+void rob_mikrotablice(int plansza[MAX_ROWS * SEG_SIZE][MAX_COLUMS * SEG_SIZE], int numer_segmentu, bool segmenty[SEG_IL][SEG_SIZE][SEG_SIZE], int numer_wiersza, int numer_kolumny)
 {
     int x = 0;
     int y = 0;
-    for (int i = 0; i < segSize; i++)
+    for (int i = 0; i < SEG_SIZE; i++)
     {
-        for (int j = 0; j < segSize; j++)
+        for (int j = 0; j < SEG_SIZE; j++)
         {
-            x = segSize * numer_wiersza + i;
-            y = segSize * numer_kolumny + j;
+            x = SEG_SIZE * numer_wiersza + i;
+            y = SEG_SIZE * numer_kolumny + j;
             plansza[x][y] = segmenty[numer_segmentu][i][j];
         }
     }
 }
 
-void prezentuj_plansze(int plansza[MAX_ROWS * segSize][MAX_COLUMS * segSize])
+void prezentuj_plansze(int plansza[MAX_ROWS * SEG_SIZE][MAX_COLUMS * SEG_SIZE])
 {
-    for (int i = 0; i < (MAX_ROWS * segSize); i++)
+    for (int i = 0; i < (MAX_ROWS * SEG_SIZE); i++)
     {
         cout << endl;
-        for (int j = 0; j < (MAX_COLUMS * segSize); j++)
+        for (int j = 0; j < (MAX_COLUMS * SEG_SIZE); j++)
         {
             if (plansza[i][j] == 1)
             {
@@ -225,7 +222,7 @@ void prezentuj_plansze(int plansza[MAX_ROWS * segSize][MAX_COLUMS * segSize])
     }
 }
 
-void losuj_punkt(int punkt[], int plansza[MAX_ROWS * segSize][MAX_COLUMS * segSize])
+void losuj_punkt(int punkt[], int plansza[MAX_ROWS * SEG_SIZE][MAX_COLUMS * SEG_SIZE])
 {
     int x, y;
     x = algorytm_losujacy(0, PLANSZA_HEIGHT);
@@ -247,26 +244,26 @@ bool is_point_inside_board(int point_x, int point_y, int plansza[PLANSZA_HEIGHT]
         return true;
 }
 
-void zacznij_ruch(int plansza[MAX_ROWS * segSize][MAX_COLUMS * segSize], int start_point[2], int end_point[2])
+void zacznij_ruch(int plansza[MAX_ROWS * SEG_SIZE][MAX_COLUMS * SEG_SIZE], int start_point[2], int end_point[2])
 {
     plansza[end_point[0]][end_point[1]] = 0;
     List list; //inicjalizacja listy
     int how = -1; // zmienna informujaca nas o wielkosci listy, jest zawsze inkrementowana jak sie zrobi list.add
     list.add(start_point[0], start_point[1]); // dodanie 1 punktu czyli naszego wylosowanego a jako koordynatow do listy
-    list.make_visited(0); // no na poczotku informujemy program ze ten wierzcholek zostal odwieddzony
+    list.make_visited(0); // no na poczatku informujemy program ze ten wierzcholek zostal odwiedzony
     how++;
     tworz_sasiedztwa(list, plansza, how, how);
     cout << endl << how << endl;
-    for (int i = 0; i <= how; i++)
-    {
-        cout << "  koordynat x wynosi: " << list.get_x(i) << "  koordynat y wynosi: " << list.get_y(i) << "  czy jest odwiedzone? : " << list.get_visited(i) << endl;
-    }
+    //for (int i = 0; i <= how; i++)
+    //{
+     //   cout << "  koordynat x wynosi: " << list.get_x(i) << "  koordynat y wynosi: " << list.get_y(i) << "  czy jest odwiedzone? : " << list.get_visited(i) << endl;
+    //}
     wiedz_do_wezla(list, plansza, 0, how);
     cout << endl << how << endl;
-    for (int i = 0; i <= how; i++)
-    {
-        cout << "  koordynat x wynosi: " << list.get_x(i) << "  koordynat y wynosi: " << list.get_y(i) << "  czy jest odwiedzone? : " << list.get_visited(i) << endl;
-    }
+    //for (int i = 0; i <= how; i++)
+    //{
+    //    cout << "  koordynat x wynosi: " << list.get_x(i) << "  koordynat y wynosi: " << list.get_y(i) << "  czy jest odwiedzone? : " << list.get_visited(i) << endl;
+    //}
     while(1)
     {
         wiedz_do_wezla(list, plansza, 0, how);
@@ -291,34 +288,34 @@ void zacznij_ruch(int plansza[MAX_ROWS * segSize][MAX_COLUMS * segSize], int sta
             break;
         }
     }
-    for (int i = 0; i <= 50; i++)
-    {
-        cout << "  koordynat x wynosi: " << list.get_x(i) << "  koordynat y wynosi: " << list.get_y(i) << "  czy jest odwiedzone? : " << list.get_visited(i) << endl;
-    }
+    //for (int i = 0; i <= 50; i++)
+    //{
+    //    cout << "  koordynat x wynosi: " << list.get_x(i) << "  koordynat y wynosi: " << list.get_y(i) << "  czy jest odwiedzone? : " << list.get_visited(i) << endl;
+    //}
     plansza[end_point[0]][end_point[1]] = 3;
 }
 
-void tworz_sasiedztwa(List& list, int plansza[MAX_ROWS * segSize][MAX_COLUMS * segSize], int number, int& how)// tworzymy liste sasiedztwa, czyli liste miejsc na ktorych robot moze sie poruszac
+void tworz_sasiedztwa(List& list, int plansza[MAX_ROWS * SEG_SIZE][MAX_COLUMS * SEG_SIZE], int number, int& how)// tworzymy liste sasiedztwa, czyli liste miejsc na ktorych robot moze sie poruszac
 {
-    if (plansza[list.get_x(number)][list.get_y(number) + 1] == 0 && (list.get_y(number) + 1) >= 0 && (list.get_y(number) + 1) < (MAX_COLUMS * segSize)) // !trzeba bedzie zrobic ifa informujacego o tym czy koordynat nie wyzedl poza rozmiar tablicy bo jak tak to bedzie blad + trzeba bedzie dodac warunek sprawdzajacy czy ten pole nie jest odwiedzone(czy is_visited przyjmuje true)
+    if (plansza[list.get_x(number)][list.get_y(number) + 1] == 0 && (list.get_y(number) + 1) >= 0 && (list.get_y(number) + 1) < (MAX_COLUMS * SEG_SIZE)) // !trzeba bedzie zrobic ifa informujacego o tym czy koordynat nie wyzedl poza rozmiar tablicy bo jak tak to bedzie blad + trzeba bedzie dodac warunek sprawdzajacy czy ten pole nie jest odwiedzone(czy is_visited przyjmuje true)
     {
         list.add(list.get_x(number), list.get_y(number) + 1);
         how++;
         number++;
     }
-    if (plansza[list.get_x(number)][list.get_y(number) - 1] == 0 && (list.get_y(number) - 1) >= 0 && (list.get_y(number) - 1) < (MAX_COLUMS * segSize))
+    if (plansza[list.get_x(number)][list.get_y(number) - 1] == 0 && (list.get_y(number) - 1) >= 0 && (list.get_y(number) - 1) < (MAX_COLUMS * SEG_SIZE))
     {
         list.add(list.get_x(number), list.get_y(number) - 1);
         how++;
         number++;
     }
-    if (plansza[list.get_x(number) + 1][list.get_y(number)] == 0 && (list.get_x(number) + 1) >= 0 && (list.get_x(number) + 1) < (MAX_ROWS * segSize))
+    if (plansza[list.get_x(number) + 1][list.get_y(number)] == 0 && (list.get_x(number) + 1) >= 0 && (list.get_x(number) + 1) < (MAX_ROWS * SEG_SIZE))
     {
         list.add(list.get_x(number) + 1, list.get_y(number));
         how++;
         number++;
     }
-    if (plansza[list.get_x(number) - 1][list.get_y(number)] == 0 && (list.get_x(number) - 1) >= 0 && (list.get_x(number) - 1) < (MAX_ROWS * segSize))
+    if (plansza[list.get_x(number) - 1][list.get_y(number)] == 0 && (list.get_x(number) - 1) >= 0 && (list.get_x(number) - 1) < (MAX_ROWS * SEG_SIZE))
     {
         list.add(list.get_x(number) - 1, list.get_y(number));
         how++;
@@ -326,7 +323,7 @@ void tworz_sasiedztwa(List& list, int plansza[MAX_ROWS * segSize][MAX_COLUMS * s
     }
 }
 
-void wiedz_do_wezla(List& list, int plansza[MAX_ROWS * segSize][MAX_COLUMS * segSize], int number, int& how)
+void wiedz_do_wezla(List& list, int plansza[MAX_ROWS * SEG_SIZE][MAX_COLUMS * SEG_SIZE], int number, int& how)
 {
     int x, y;
     if (list.get_visited(number) == 0)
