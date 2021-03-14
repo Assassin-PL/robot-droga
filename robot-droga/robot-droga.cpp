@@ -130,6 +130,7 @@ int main()
     prezentuj_plansze(plansza);
     cout << endl;
     zacznij_ruch(plansza, start_point, end_point);
+    prezentuj_plansze(plansza);
     return 0;
 }
 
@@ -216,6 +217,10 @@ void prezentuj_plansze(int plansza[8 * segSize][4 * segSize])
             {
                 cout << "B";
             }
+            else if (plansza[i][j] == 4)
+            {
+                cout << "*";
+            }
         }
     }
 }
@@ -262,7 +267,7 @@ void zacznij_ruch(int plansza[8 * segSize][4 * segSize], int start_point[2], int
     {
         cout << "  koordynat x wynosi: " << list.get_x(i) << "  koordynat y wynosi: " << list.get_y(i) << "  czy jest odwiedzone? : " << list.get_visited(i) << endl;
     }
-    for (int i = 0; i < 10000; i++)
+    while(1)
     {
         wiedz_do_wezla(list, plansza, 0, how);
         if (list.get_x(0) == end_point[0] && list.get_y(0) == end_point[1])
@@ -290,37 +295,7 @@ void zacznij_ruch(int plansza[8 * segSize][4 * segSize], int start_point[2], int
     {
         cout << "  koordynat x wynosi: " << list.get_x(i) << "  koordynat y wynosi: " << list.get_y(i) << "  czy jest odwiedzone? : " << list.get_visited(i) << endl;
     }
-    /*while (1)
-    {
-        wiedz_do_wezla(list, plansza, 0, how);
-        if (list.get_x(0) == end_point[0] && list.get_y(0) == end_point[0])
-        {
-            cout << "znaleziono B!!!!!";
-            break;
-        }
-        if (list.get_x(1) == end_point[0] && list.get_y(1) == end_point[0])
-        {
-            cout << "znaleziono B!!!!!";
-            break;
-        }if (list.get_x(2) == end_point[0] && list.get_y(2) == end_point[0])
-        {
-            cout << "znaleziono B!!!!!";
-            break;
-        }if (list.get_x(3) == end_point[0] && list.get_y(3) == end_point[0])
-        {
-            cout << "znaleziono B!!!!!";
-            break;
-        }if (list.get_x(4) == end_point[0] && list.get_y(4) == end_point[0])
-        {
-            cout << "znaleziono B!!!!!";
-            break;
-        }
-    }*/
     plansza[end_point[0]][end_point[1]] = 3;
-    //while (plansza[list.get_x(how)][list.get_y(how)] != 3)//trzeba mu ogarnac zeby sie nie zapetla to znaczy co bedzie jak dojdzie do koziego rogu trzeba bedzie mu napisac funkcje zeby sie wycofal
-    //{
-    //    wiedz_do_wezla(list, plansza, how, how);
-    //}
 }
 
 void tworz_sasiedztwa(List& list, int plansza[8 * segSize][4 * segSize], int number, int& how)// tworzymy liste sasiedztwa, czyli liste miejsc na ktorych robot moze sie poruszac
@@ -359,7 +334,7 @@ void wiedz_do_wezla(List& list, int plansza[8 * segSize][4 * segSize], int numbe
         x = list.get_x(number);
         y = list.get_y(number);
         list.make_visited(number); // no na poczotku informujemy program ze ten wierzcholek zostal odwieddzony
-        plansza[x][y] = 1;
+        plansza[x][y] = 4;
         tworz_sasiedztwa(list, plansza, number, how);
     }
     else
