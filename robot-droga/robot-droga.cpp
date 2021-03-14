@@ -86,6 +86,10 @@ bool is_point_inside_board(int point_x, int point_y, int plansza[PLANSZA_HEIGHT]
 void zacznij_ruch(int plansza[8 * segSize][4 * segSize], int start_point[2], int end_point[2]);
 void wiedz_do_wezla(List& list, int plansza[8 * segSize][4 * segSize], int number, int& how);
 void tworz_sasiedztwa(List& list, int plansza[8 * segSize][4 * segSize], int number, int& how);
+void tworz_sasiedztwa_2(List& list, int plansza[8 * segSize][4 * segSize], int number, int& how);
+void tworz_sasiedztwa_3(List& list, int plansza[8 * segSize][4 * segSize], int number, int& how);
+void tworz_sasiedztwa_4(List& list, int plansza[8 * segSize][4 * segSize], int number, int& how);
+
 
 int main()
 {
@@ -258,7 +262,35 @@ void zacznij_ruch(int plansza[8 * segSize][4 * segSize], int start_point[2], int
     {
         cout << "  koordynat x wynosi: " << list.get_x(i) << "  koordynat y wynosi: " << list.get_y(i) << "  czy jest odwiedzone? : " << list.get_visited(i) << endl;
     }
-    while (1)
+    for (int i = 0; i < 10000; i++)
+    {
+        wiedz_do_wezla(list, plansza, 0, how);
+        if (list.get_x(0) == end_point[0] && list.get_y(0) == end_point[1])
+        {
+            cout << endl << "Znaleziono B!!" << endl;
+            break;
+        }
+        if (list.get_x(1) == end_point[1] && list.get_y(0) == end_point[1])
+        {
+            cout <<endl << "Znaleziono B!!"<<endl;
+            break;
+        }
+        if (list.get_x(2) == end_point[2] && list.get_y(0) == end_point[1])
+        {
+            cout << endl << "Znaleziono B!!" << endl;
+            break;
+        }
+        if (list.get_x(3) == end_point[3] && list.get_y(0) == end_point[1])
+        {
+            cout << endl << "Znaleziono B!!" << endl;
+            break;
+        }
+    }
+    for (int i = 0; i <= 50; i++)
+    {
+        cout << "  koordynat x wynosi: " << list.get_x(i) << "  koordynat y wynosi: " << list.get_y(i) << "  czy jest odwiedzone? : " << list.get_visited(i) << endl;
+    }
+    /*while (1)
     {
         wiedz_do_wezla(list, plansza, 0, how);
         if (list.get_x(0) == end_point[0] && list.get_y(0) == end_point[0])
@@ -283,7 +315,7 @@ void zacznij_ruch(int plansza[8 * segSize][4 * segSize], int start_point[2], int
             cout << "znaleziono B!!!!!";
             break;
         }
-    }
+    }*/
     plansza[end_point[0]][end_point[1]] = 3;
     //while (plansza[list.get_x(how)][list.get_y(how)] != 3)//trzeba mu ogarnac zeby sie nie zapetla to znaczy co bedzie jak dojdzie do koziego rogu trzeba bedzie mu napisac funkcje zeby sie wycofal
     //{
@@ -293,6 +325,96 @@ void zacznij_ruch(int plansza[8 * segSize][4 * segSize], int start_point[2], int
 
 void tworz_sasiedztwa(List& list, int plansza[8 * segSize][4 * segSize], int number, int& how)// tworzymy liste sasiedztwa, czyli liste miejsc na ktorych robot moze sie poruszac
 {
+    if (plansza[list.get_x(number)][list.get_y(number) + 1] == 0 && (list.get_y(number) + 1) >= 0 && (list.get_y(number) + 1) < (4 * segSize)) // !trzeba bedzie zrobic ifa informujacego o tym czy koordynat nie wyzedl poza rozmiar tablicy bo jak tak to bedzie blad + trzeba bedzie dodac warunek sprawdzajacy czy ten pole nie jest odwiedzone(czy is_visited przyjmuje true)
+    {
+        list.add(list.get_x(number), list.get_y(number) + 1);
+        how++;
+        number++;
+    }
+    if (plansza[list.get_x(number)][list.get_y(number) - 1] == 0 && (list.get_y(number) - 1) >= 0 && (list.get_y(number) - 1) < (4 * segSize))
+    {
+        list.add(list.get_x(number), list.get_y(number) - 1);
+        how++;
+        number++;
+    }
+    if (plansza[list.get_x(number) + 1][list.get_y(number)] == 0 && (list.get_x(number) + 1) >= 0 && (list.get_x(number) + 1) < (8 * segSize))
+    {
+        list.add(list.get_x(number) + 1, list.get_y(number));
+        how++;
+        number++;
+    }
+    if (plansza[list.get_x(number) - 1][list.get_y(number)] == 0 && (list.get_x(number) - 1) >= 0 && (list.get_x(number) - 1) < (8 * segSize))
+    {
+        list.add(list.get_x(number) - 1, list.get_y(number));
+        how++;
+        number++;
+    }
+}
+
+void tworz_sasiedztwa_2(List& list, int plansza[8 * segSize][4 * segSize], int number, int& how)// tworzymy liste sasiedztwa, czyli liste miejsc na ktorych robot moze sie poruszac
+{
+    if (plansza[list.get_x(number)][list.get_y(number) - 1] == 0 && (list.get_y(number) + 1) > 0 && (list.get_y(number) + 1) < (4 * segSize))
+    {
+        list.add(list.get_x(number), list.get_y(number) - 1);
+        how++;
+        number++;
+    }
+    if (plansza[list.get_x(number)][list.get_y(number) + 1] == 0 && (list.get_y(number) + 1) > 0 && (list.get_y(number) + 1) < (4 * segSize)) // !trzeba bedzie zrobic ifa informujacego o tym czy koordynat nie wyzedl poza rozmiar tablicy bo jak tak to bedzie blad + trzeba bedzie dodac warunek sprawdzajacy czy ten pole nie jest odwiedzone(czy is_visited przyjmuje true)
+    {
+        list.add(list.get_x(number), list.get_y(number) + 1);
+        how++;
+        number++;
+    }
+    if (plansza[list.get_x(number) + 1][list.get_y(number)] == 0 && (list.get_x(number) + 1) > 0 && (list.get_x(number) + 1) < (8 * segSize))
+    {
+        list.add(list.get_x(number) + 1, list.get_y(number));
+        how++;
+        number++;
+    }
+    if (plansza[list.get_x(number) - 1][list.get_y(number)] == 0 && (list.get_x(number) + 1) > 0 && (list.get_x(number) + 1) < (8 * segSize))
+    {
+        list.add(list.get_x(number) - 1, list.get_y(number));
+        how++;
+        number++;
+    }
+}
+
+void tworz_sasiedztwa_3(List& list, int plansza[8 * segSize][4 * segSize], int number, int& how)// tworzymy liste sasiedztwa, czyli liste miejsc na ktorych robot moze sie poruszac
+{
+    if (plansza[list.get_x(number) + 1][list.get_y(number)] == 0 && (list.get_x(number) + 1) > 0 && (list.get_x(number) + 1) < (8 * segSize))
+    {
+        list.add(list.get_x(number) + 1, list.get_y(number));
+        how++;
+        number++;
+    }
+    if (plansza[list.get_x(number)][list.get_y(number) + 1] == 0 && (list.get_y(number) + 1) > 0 && (list.get_y(number) + 1) < (4 * segSize)) // !trzeba bedzie zrobic ifa informujacego o tym czy koordynat nie wyzedl poza rozmiar tablicy bo jak tak to bedzie blad + trzeba bedzie dodac warunek sprawdzajacy czy ten pole nie jest odwiedzone(czy is_visited przyjmuje true)
+    {
+        list.add(list.get_x(number), list.get_y(number) + 1);
+        how++;
+        number++;
+    }
+    if (plansza[list.get_x(number)][list.get_y(number) - 1] == 0 && (list.get_y(number) + 1) > 0 && (list.get_y(number) + 1) < (4 * segSize))
+    {
+        list.add(list.get_x(number), list.get_y(number) - 1);
+        how++;
+        number++;
+    }
+    if (plansza[list.get_x(number) - 1][list.get_y(number)] == 0 && (list.get_x(number) + 1) > 0 && (list.get_x(number) + 1) < (8 * segSize))
+    {
+        list.add(list.get_x(number) - 1, list.get_y(number));
+        how++;
+        number++;
+    }
+}
+
+void tworz_sasiedztwa_4(List& list, int plansza[8 * segSize][4 * segSize], int number, int& how)// tworzymy liste sasiedztwa, czyli liste miejsc na ktorych robot moze sie poruszac
+{
+    if (plansza[list.get_x(number) - 1][list.get_y(number)] == 0 && (list.get_x(number) + 1) > 0 && (list.get_x(number) + 1) < (8 * segSize))
+    {
+        list.add(list.get_x(number) - 1, list.get_y(number));
+        how++;
+        number++;
+    }
     if (plansza[list.get_x(number)][list.get_y(number) + 1] == 0 && (list.get_y(number) + 1) > 0 && (list.get_y(number) + 1) < (4 * segSize)) // !trzeba bedzie zrobic ifa informujacego o tym czy koordynat nie wyzedl poza rozmiar tablicy bo jak tak to bedzie blad + trzeba bedzie dodac warunek sprawdzajacy czy ten pole nie jest odwiedzone(czy is_visited przyjmuje true)
     {
         list.add(list.get_x(number), list.get_y(number) + 1);
@@ -311,12 +433,6 @@ void tworz_sasiedztwa(List& list, int plansza[8 * segSize][4 * segSize], int num
         how++;
         number++;
     }
-    if (plansza[list.get_x(number) - 1][list.get_y(number)] == 0 && (list.get_x(number) + 1) > 0 && (list.get_x(number) + 1) < (8 * segSize))
-    {
-        list.add(list.get_x(number) - 1, list.get_y(number));
-        how++;
-        number++;
-    }
 }
 
 void wiedz_do_wezla(List& list, int plansza[8 * segSize][4 * segSize], int number, int& how)
@@ -329,7 +445,6 @@ void wiedz_do_wezla(List& list, int plansza[8 * segSize][4 * segSize], int numbe
         list.make_visited(number); // no na poczotku informujemy program ze ten wierzcholek zostal odwieddzony
         plansza[x][y] = 1;
         tworz_sasiedztwa(list, plansza, number, how);
-        plansza[x][y] = 0;
     }
     else
     {
