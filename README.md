@@ -1,2 +1,2 @@
 # robot-droga
-tu piszemy uwagi jakby co albo w konkretnym miejscu w kodzie 
+W projekcie jest zawarta implementacja poszukiwania drogi przez robota w losowo generowanych planszach , przy uzyciu algorytmu Depth-first search (DFS)
